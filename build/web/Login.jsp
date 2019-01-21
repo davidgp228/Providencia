@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>awsi-login-rev-20160216</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    
+        
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
     <link rel="stylesheet" href="assets/bootstrap/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/Bootstrap-Payment-Form.css">
@@ -24,8 +24,23 @@
     <link rel="stylesheet" href="assets/css/Google-Style-Login.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
+    
+    
+    <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      body, html {
+        background: #007bff;
+        height: 100%;
+      }
+    </style>
+    
+
     </head>
-    <body  style="background-color:#33779A;">
+    <body>    
+        
+        <link href='https://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+        
           <div class="container">
         <div class="row register-form">
             <div class="col-md-10 col-md-offset-1">
@@ -107,7 +122,13 @@
         
     </script>
     
-        
+    <!-- Script para animacion background -->
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://ricostacruz.com/jquery.transit/jquery.transit.min.js'></script>
+
+    <script  src="js/index.js"></script>
+    <!-- Script para animacion background -->
+    
     </body>
 </html>
 

@@ -30,13 +30,13 @@ public class Conexion {
             String ip=InetAddress.getLocalHost().getHostAddress();
             System.out.println("ip:"+ip);
             if(ip.equals("127.0.0.1")){
-                dataSource.setPassword("12345678");
+                dataSource.setPassword("Alba+2018");
                 dataSource.setUrl("jdbc:mysql://albadti2018.ddns.net:3306/ProvidenciaBD?zeroDateTimeBehavior=convertToNull");
                 System.out.println("real");
                 valueconecction="real albadti2018.ddns.net";
             }else{
                 System.out.println("pruebas");
-                dataSource.setPassword("12345678");
+                dataSource.setPassword("Alba+2018");
                 dataSource.setUrl("jdbc:mysql://192.168.1.123:3306/ProvidenciaBD");
                 valueconecction="pruebas 192.168.1.123";
                //dataSource.setUrl("jdbc:mysql://albadti.com/avistamientopruebas");

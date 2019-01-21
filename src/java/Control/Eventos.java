@@ -82,7 +82,7 @@ public class Eventos extends HttpServlet{
         datasource= Conexion.getdatasource();
         try(Connection con = datasource.getConnection()){
         
-        PreparedStatement pst2=con.prepareStatement("insert into Marcadores (IMEI,Latitud,Longitud,Status) values (?,?,?,?)");
+        PreparedStatement pst2=con.prepareStatement("call insertarMarcador(?,?,?,?)");
         pst2.setString(1, IMEI);
         pst2.setString(2, Latitud);
         pst2.setString(3, Longitud);
@@ -105,11 +105,9 @@ public class Eventos extends HttpServlet{
     datasource=Conexion.getdatasource();
     
     try(Connection con =datasource.getConnection();
-        PreparedStatement pst=con.prepareStatement("SELECT IMEI,Latitud, Longitud FROM Marcadores where IdMarcador="
-               + "(select MAX(IdMarcador) from Marcadores where IMEI=?)");
-        PreparedStatement pstestadisticas= con.prepareStatement("SELECT Velocidad,RPM, Temperatura, Fecha "
-                + "FROM Estadisticas WHERE IdEstadistica=(select MAX(IdEstadistica) from Estadisticas where IMEI=?)");
-        PreparedStatement pstruta= con.prepareStatement("SELECT Latitud,Longitud FROM RutaMarcadores WHERE FkRuta = ?;")){
+        PreparedStatement pst=con.prepareStatement("call obtenerCoordenadasHaversine(?)");
+        PreparedStatement pstestadisticas= con.prepareStatement("call obtenerEstadisticasHaversine(?)");
+        PreparedStatement pstruta= con.prepareStatement("call obtenerCoordenadasRuta(?)")){
        
        pst.setString(1, imei);
        ResultSet rs=pst.executeQuery(); 
@@ -168,8 +166,7 @@ public class Eventos extends HttpServlet{
     datasource=Conexion.getdatasource();
     
     try(Connection con =datasource.getConnection();
-        PreparedStatement pst=con.prepareStatement("SELECT IMEI,Latitud, Longitud FROM Marcadores where IdMarcador="
-               + "(select MAX(IdMarcador) from Marcadores where IMEI=?)");
+        PreparedStatement pst=con.prepareStatement("call obtenerMarcador(?)");
         PreparedStatement pstcercos=con.prepareStatement("SELECT coordenadaA,coordenadaB,coordenadaC "
                 + " FROM RutaCercos WHERE FkRuta=?");){
        

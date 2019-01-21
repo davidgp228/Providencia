@@ -139,7 +139,7 @@ public class Login extends HttpServlet {
     public int getIdUser(String usuario,String pass){
         datasource= Conexion.getdatasource();
         try (Connection con = datasource.getConnection()){
-            PreparedStatement pst=con.prepareStatement("SELECT IdAdministrador FROM Administrador where Usuario=? and Password=?");
+            PreparedStatement pst=con.prepareStatement("call validarLogin(?,?)");
             pst.setString(1, usuario);
             pst.setString(2, pass);
             ResultSet rs=pst.executeQuery();
@@ -155,7 +155,7 @@ public class Login extends HttpServlet {
     public String getName(int userId){
         datasource= Conexion.getdatasource();
         try (Connection con = datasource.getConnection()){
-            PreparedStatement pst=con.prepareStatement("SELECT Nombre FROM Administrador where IdAdministrador=?");
+            PreparedStatement pst=con.prepareStatement("call obtenerNombre(?)");
             pst.setInt(1, userId);
             ResultSet rs=pst.executeQuery();
             if(rs.next()){
@@ -168,10 +168,11 @@ public class Login extends HttpServlet {
     }
     
     public String getfkEmpresa(int userId){
+        
         String request="";
         
         try(Connection con= Conexion.getdatasource().getConnection();
-            PreparedStatement pst= con.prepareStatement("SELECT fkEmpresa FROM Administrador WHERE IdAdministrador=?")){
+            PreparedStatement pst= con.prepareStatement("call obtenerFKEmpresa(?)")){
             pst.setInt(1, userId);
             
             ResultSet rs= pst.executeQuery();
@@ -190,7 +191,7 @@ public class Login extends HttpServlet {
     private boolean cambiarContrasena(int idu,String usuario, String contrasena,String contrasenaAnterior ) {
         datasource=Conexion.getdatasource();
         try (Connection con = datasource.getConnection()){
-            PreparedStatement pst=con.prepareStatement("select IdAdministrador,Usuario from Administrador where IdAdministrador=? and Password=?");
+            PreparedStatement pst=con.prepareStatement("call cambiarContrasena(?,?)");
             pst.setInt(1, idu);
             pst.setString(2, contrasenaAnterior);
             ResultSet rs=pst.executeQuery();
@@ -205,7 +206,7 @@ public class Login extends HttpServlet {
         }
  
         try (Connection con = datasource.getConnection()){
-            PreparedStatement pst=con.prepareStatement("update Administrador set Password=?,Usuario=? where IdAdministrador=?");
+            PreparedStatement pst=con.prepareStatement("call actualizarContrasena(?,?,?)");
             pst.setString(1, contrasena);
             pst.setString(2, usuario);
             pst.setInt(3, idu);

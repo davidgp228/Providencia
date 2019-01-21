@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,9 +36,14 @@ public class registroConductores extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession sesion=request.getSession();
+        
         try (PrintWriter out = response.getWriter()) {
             String accion= Consultas.getAttrib(request, "accion");
             
+            String fkempresa= sesion.getAttribute("fkempresa").toString();
+                        
             String conductor=Consultas.getAttrib(request, "_idconductor");
 
             String id= Consultas.getAttrib(request, "_id");
@@ -68,7 +74,7 @@ public class registroConductores extends HttpServlet {
                    out.println("<script type=\"text/javascript\">");
                    out.println("alert('"+insertarConductor(id,nombre,apellidopaterno,apellidomaterno,
                            dia,mes,anio,edad,sexo,numerolicencia,tiposangre,donador,calle,numeroexterior,numerointerior,
-                           codigopostal,colonia,municipio,estado,telefono,correo)+"');");
+                           codigopostal,colonia,municipio,estado,telefono,correo, fkempresa)+"');");
                    out.println("window.location = 'registroConductores.jsp';");
                    out.println("</script>");
                 break;
@@ -94,14 +100,16 @@ public class registroConductores extends HttpServlet {
     public static String insertarConductor(String id,String nombre,String apellidopaterno,
             String apellidomaterno,String dia,String mes, String anio, String edad, String sexo,String numerolicencia,
             String tiposangre,String donador,String calle,String numeroexterior,String numerointerior,String codigopostal,
-            String colonia, String municipio, String estado,String telefono,String correo){
+            String colonia, String municipio, String estado,String telefono,String correo, String fkempresa){
         String request="No se ha podido insertar conductor";
         
         try(Connection con= Conexion.getdatasource().getConnection();
-            PreparedStatement pst= con.prepareStatement("INSERT INTO Conductores (ID,Nombre,ApellidoPaterno,"
+           /*PreparedStatement pst= con.prepareStatement("INSERT INTO Conductores (ID,Nombre,ApellidoPaterno,"
                     + "ApellidoMaterno,Dia,Mes,Anio,Edad,Sexo,NumeroLicencia,TipoSangre,Donador,Calle,NumeroExterior,"
                     + "NumeroInterior,CodigoPostal,Colonia,Municipio,Estado,Telefono,Correo)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");*/
+                PreparedStatement pst= con.prepareStatement("call insertarConductor(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                
            ){
             pst.setString(1, id);
             pst.setString(2, nombre);
@@ -124,6 +132,7 @@ public class registroConductores extends HttpServlet {
             pst.setString(19, estado);
             pst.setString(20, telefono);
             pst.setString(21, correo);
+            pst.setString(22, fkempresa);
             pst.execute();
            
         
@@ -146,7 +155,9 @@ public class registroConductores extends HttpServlet {
             PreparedStatement pst= con.prepareStatement("UPDATE Conductores SET ID=?,Nombre=?, ApellidoPaterno=?,"
                     + "ApellidoMaterno=?, Dia=?, Mes=?, Anio=?, Edad=?, Sexo=?, NumeroLicencia=?, TipoSangre=?,"
                     + "Donador=?, Calle=?, NumeroExterior=?, NumeroInterior=?, CodigoPostal=?, Colonia=?, Municipio=?,"
-                    + "Estado=?, Telefono=?, Correo=? WHERE IdConductor=?")){
+                    + "Estado=?, Telefono=?, Correo=? WHERE IdConductor=?")
+               // PreparedStatement pst= con.prepareStatement("call actualizarConductor(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                ){
             pst.setString(1, id);
             pst.setString(2, nombre);
             pst.setString(3, apellidopaterno);
@@ -168,11 +179,11 @@ public class registroConductores extends HttpServlet {
             pst.setString(19, estado);
             pst.setString(20, telefono);
             pst.setString(21, correo);
-            pst.setString(22, ideditar);      
+            pst.setString(22, ideditar);   
             
             pst.execute();
             
-            request="Datos actualizados correctamente";
+            request="Datos actualizados correctamente "+ ideditar;
             
         }catch(Exception e){
             e.printStackTrace();
@@ -185,7 +196,7 @@ public class registroConductores extends HttpServlet {
         String request="No se ha podido eliminar conductor";
         String fkauto="";
         try(Connection con= Conexion.getdatasource().getConnection();
-            PreparedStatement psteliminar= con.prepareStatement("DELETE FROM Conductores WHERE IdConductor=?");
+            PreparedStatement psteliminar= con.prepareStatement("call eliminarConductor(?)");
             ){
             
             psteliminar.setString(1, id);

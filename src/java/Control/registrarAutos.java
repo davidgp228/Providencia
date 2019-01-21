@@ -105,7 +105,7 @@ public class registrarAutos extends HttpServlet {
             String combustible, String ejes, String uso, String origenvehiculo,String clase, String tipo,
             String litros,String toneladas, String personas,String nombre, String apellidopaterno,String apellidomaterno){
         System.out.println("Insertando datos...");
-    String request="No se han podido insertar los datos";
+    String request;
     int fkauto=0;
     
     try(Connection con= Conexion.getdatasource().getConnection();
