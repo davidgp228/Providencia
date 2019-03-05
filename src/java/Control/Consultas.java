@@ -21,12 +21,16 @@ import org.json.JSONObject;
  */
 public class Consultas {
     
+    public static final String nombreProyecto="CANCERBERO";
+    
     private static String imeis=null;
     private static String rutas=null;
     private static String autosid=null;
     
     //** Cadenas de permisos
     private static final String mapa=        " <li> <a href=\"index.jsp\"> Crear ruta </a> </li>";
+    private static final String cerco=       " <li> <a href=\"cerco.jsp\"> Cerco </a> </li>";
+    private static final String geocerca=       " <li> <a href=\"geocerca.jsp\"> Geocerca </a> </li>";
     private static final String autos=       " <li> <a href=\"registrarAutos.jsp\"> Registrar vehiculos </a> </li>";
     private static final String dispositivos=" <li> <a href=\"registrarDispositivos.jsp\"> Registrar dipositivos </a> </li>";
     private static final String conductores= " <li> <a href=\"registroConductores.jsp\"> Registrar conductores </a> </li>";
@@ -96,9 +100,10 @@ public class Consultas {
         String permiso="";
         
         try(Connection con= Conexion.getdatasource().getConnection();
-            PreparedStatement pst= con.prepareStatement("SELECT Permiso FROM Permisos WHERE fkAdministrador=?")){
+            PreparedStatement pst= con.prepareStatement("call obtenerPermisos(?)")
+                ){
             pst.setInt(1, userID);
-            
+                        
             ResultSet rs= pst.executeQuery();
             
             consulta:
@@ -107,7 +112,7 @@ public class Consultas {
                 
                 switch (permiso) {
                     case "Administrador":
-                        request = (mapa+autos+dispositivos+conductores+horarios+monitoreo+usuarios+empresa);
+                        request = (mapa+cerco+geocerca+autos+dispositivos+conductores+horarios+monitoreo+usuarios+empresa);
                         break consulta;
                     case "mapa":
                         request+=mapa;
@@ -143,18 +148,19 @@ public class Consultas {
         String []request= new String[4];
         
         try(Connection con= Conexion.getdatasource().getConnection();
-            PreparedStatement pst= con.prepareStatement("SELECT * FROM Empresa WHERE IdEmpresa=?")){
+          //  PreparedStatement pst= con.prepareStatement("SELECT * FROM Empresa WHERE IdEmpresa=?")
+            PreparedStatement pst= con.prepareStatement("call obtenerEmpresa(?)")
+                
+                ){
             pst.setString(1, idEmpresa);
             ResultSet rs= pst.executeQuery();
-            
+                        
             rs.next();
             
             request[0]= rs.getString(1);
             request[1]= rs.getString(2);
             request[2]= rs.getString(3);
             request[3]= rs.getString(4);
-            
-            
         
         }catch(Exception e){
             e.printStackTrace();
@@ -196,10 +202,11 @@ public class Consultas {
      
          
          try (Connection con= Conexion.getdatasource().getConnection();
-             PreparedStatement pst= con.prepareStatement("SELECT ID,Nombre FROM Rutas WHERE fkEmpresa=?")){
+                 PreparedStatement pst= con.prepareStatement("call obtenerRutas(?)")
+                 ){
              pst.setString(1, fkempresa);
              ResultSet rs=pst.executeQuery();
-             
+                          
              rutas="";
              String s, s2;
              while(rs.next()){

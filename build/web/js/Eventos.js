@@ -157,7 +157,6 @@
       
       }
       
-      
         var obtenerRuta = [];
         //** Cargar ruta seleccionada*******************************
         var seleccionarruta = document.getElementById('idruta');

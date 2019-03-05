@@ -183,7 +183,7 @@ public class registroConductores extends HttpServlet {
             
             pst.execute();
             
-            request="Datos actualizados correctamente "+ ideditar;
+            request="Datos actualizados correctamente ";
             
         }catch(Exception e){
             e.printStackTrace();

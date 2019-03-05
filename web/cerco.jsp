@@ -172,7 +172,7 @@
                 <tr>
                     <td><select id="idruta">
                             <option value="">Seleccionar</option>
-                            <%String rutas=Consultas.getRutas(); %>
+                            <%String rutas=Consultas.getRutas(sesion.getAttribute("fkempresa").toString()); %>
                             <%=rutas%>
                         </select>
                         <center> <img id="idcargando" src="images/loader.gif" alt="Cargando" style="display:none;width:10px;height:10px;"></center>

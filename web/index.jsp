@@ -58,7 +58,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ALBA Geolocalizacion</title>
+        <title><%=Consultas.nombreProyecto%></title>
            <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
 

@@ -3,14 +3,14 @@
     Created on : 30-ago-2017, 11:17:41
     Author     : mac
 --%>
-
+<%@page import="Control.Consultas"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>awsi-login-rev-20160216</title>
+    <title><%=Consultas.nombreProyecto%></title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
         
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">

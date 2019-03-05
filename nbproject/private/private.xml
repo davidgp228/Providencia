@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/mac/NetBeansProjects/Providencia/src/java/Control/Login.java</file>
-            <file>file:/Users/mac/NetBeansProjects/Providencia/src/java/Control/Eventos.java</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/web/Eventos.jsp</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/web/js/geocerca.js</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/web/cerco.jsp</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/src/java/Control/cerco.java</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/web/js/Eventos.js</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/web/js/cerco.js</file>
+            <file>file:/Users/mac/NetBeansProjects/Providencia/web/geocerca.jsp</file>
         </group>
     </open-files>
 </project-private>
